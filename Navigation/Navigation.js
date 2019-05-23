@@ -1,45 +1,48 @@
-import {createStackNavigator, createDrawerNavigator, createAppContainer} from "react-navigation"
+import React from "react"
+import {createStackNavigator, createBottomTabNavigator, createAppContainer} from "react-navigation"
+import {Image, StyleSheet} from "react-native"
 import Login from "../Components/Login"
-import Home from "../Components/Home"
+import WaitingList from "../Components/WaitingList"
 import Testie from "../Components/Testie"
+import ValidateOperation from "../Components/ValidateOperation"
+import Menu from "../Components/Menu"
 import translate from "../utils/language"
 
-const drawie = createDrawerNavigator({
-    Home: {
-        screen: Home,
+const tabbie = createBottomTabNavigator({
+    WaitingList: {
+        screen: WaitingList,
         navigationOptions: {
-            title: "Accueil",
-            drawerLabel: "Accueil",
-            headerStyle: {
-                backgroundColor: "#FF0000"
+            tabBarIcon: () => {
+                return <Image source={require("../Images/clock.png")} style={styles.icon}/>
             },
-            headerTintColor: "#FFFFFF",
-            headerTitleStyle: {
-                fontWeight: "bold",
-                color: "#FFFFFF"
-            },
-            headerLeft: null
+            tabBarLabel: "File d'attente"
         }
     },
-    Test : {
-        screen: Testie,
+    OperationValidation: {
+        screen: ValidateOperation,
         navigationOptions: {
-            title: "Testie",
-            drawerLabel: "Test",
-            headerStyle: {
-                backgroundColor: "#FF0000"
+            tabBarIcon: () => {
+                return <Image source={require("../Images/validate.jpg")} style={styles.icon}/>
             },
-            headerTintColor: "#FFFFFF",
-            headerTitleStyle: {
-                fontWeight: "bold",
-                color: "#FFFFFF"
-            },
-            headerLeft: null
+            tabBarLabel: "Validation d'opération"
         }
+    },
+    Menu: {
+        screen: Menu,
+        navigationOptions: {
+            tabBarIcon: () => {
+                return <Image source={require("../Images/hamburger.png")} style={styles.icon}/>
+            },
+            tabBarLabel: "Menu"
+        }
+    },
+}, {
+    tabBarOptions: {
+        activeTintColor: "#FF0000",
+        inactiveTintColor: "#000000",
+        activeBackgroundColor: "#ededed"
     }
-
 });
-
 
 const stackie = createStackNavigator({
     Login: {
@@ -49,7 +52,7 @@ const stackie = createStackNavigator({
         }
     },
     Home: {
-        screen: drawie,
+        screen: tabbie,
         navigationOptions: {
             // title: "Accueil",
             headerStyle: {
@@ -64,6 +67,13 @@ const stackie = createStackNavigator({
         }
     }
 
+});
+
+const styles = StyleSheet.create({
+    icon: {
+        width: 30,
+        height: 30
+    }
 });
 
 export default createAppContainer(stackie)

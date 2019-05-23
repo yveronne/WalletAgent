@@ -19,8 +19,10 @@ class Login extends React.Component {
         logUser(usernme, pass)
             .then((data) => {
                 if(data.hasOwnProperty("token")){
-                    console.log(data.token);
-                    this.props.navigation.navigate("Home", {token: data.token});
+                    global.token = data.token;
+                    global.merchantPointID = data.merchantPointID;
+                    this.props.navigation.navigate("WaitingList");
+
                 }
                 else{
                     var values = Object.values(data);
