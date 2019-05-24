@@ -1,5 +1,5 @@
 import React from "react"
-import {View, Image, Text, TextInput, TouchableOpacity, Alert} from "react-native"
+import {View, Image, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator} from "react-native"
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view"
 import EStyleSheet from "react-native-extended-stylesheet"
 import translate from "../utils/language"
@@ -13,16 +13,34 @@ class Login extends React.Component {
 
         this.username="";
         this.password="";
+        this.state = {
+            isLoading: false
+        };
+    }
+
+    _displayLoading(){
+        if(this.state.isLoading){
+            return (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        }
+    }
+
+    componentDidMount(){
+        this.setState({isLoading: false});
     }
 
     _login(usernme, pass){
+        this.setState({isLoading: true});
         logUser(usernme, pass)
             .then((data) => {
                 if(data.hasOwnProperty("token")){
                     global.token = data.token;
                     global.merchantPointID = data.merchantPointID;
                     this.props.navigation.navigate("WaitingList");
-
+                    this.setState({isLoading: false});
                 }
                 else{
                     var values = Object.values(data);
@@ -75,6 +93,7 @@ class Login extends React.Component {
         return (
             <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}
                                      contentContainerStyle={styles.main_container}>
+                {this._displayLoading()}
                 <Image style={styles.logo}
                        source={require("../Images/afrilandcmr.jpg")}
                        resizeMode="contain"/>
@@ -110,11 +129,21 @@ class Login extends React.Component {
 }
 
 const styles = EStyleSheet.create({
+    loadingContainer : {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 100,
+        bottom: 0,
+        alignItems: "center",
+        justifyContent: "center"
+    },
     main_container: {
         flex: 1,
         flexDirection: "column",
         padding : "$heightie",
-        backgroundColor: "#ededed"
+        backgroundColor: "#ededed",
+        marginTop: 22
     },
     logo:{
         flex: 1,

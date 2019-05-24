@@ -4,7 +4,6 @@ import EStyleSheet from "react-native-extended-stylesheet";
 import {logout} from "../API/WalletApi"
 
 class Menu extends React.Component {
-
     _logOut(){
         logout(global.token)
             .then(response => {
@@ -40,7 +39,8 @@ const styles = EStyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "flex-start",
-        backgroundColor: "#ededed"
+        backgroundColor: "#ededed",
+        marginTop: 22
     },
     menu_item: {
         flexDirection: "column",

@@ -44,7 +44,7 @@ class ValidateOperation extends React.Component {
                     <Text style={styles.text}>Code de la transaction</Text>
                     <TextInput placeholder="Code"
                                onChangeText={(text) => this._codeInputChanged(text)}
-                               autoFocus={true}
+                               autoFocus={false}
                                style={styles.input}
                                keyboardType="numeric"/>
                 </View>
