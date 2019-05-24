@@ -1,5 +1,6 @@
 import React from "react"
-import {View, Text, FlatList, ActivityIndicator, Alert} from "react-native"
+import moment from "moment"
+import {View, FlatList, ActivityIndicator, Alert} from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import {SearchBar, ListItem} from "react-native-elements"
 import {getWaitingList, markAsServed} from "../API/WalletApi"
@@ -9,9 +10,8 @@ class WaitingList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            isLoading: false,
-            list: [],
-            selectedLine: null
+            isLoading: true,
+            list: []
         };
         this.array = [];
     }
@@ -39,7 +39,7 @@ class WaitingList extends React.Component {
             .catch(error => console.log("Une erreur est survenue " +error))
     }
 
-    componentWillMount(){
+    componentDidMount(){
         getWaitingList(global.merchantPointID, global.token)
             .then(data => {
                 this.setState({
@@ -108,7 +108,7 @@ class WaitingList extends React.Component {
                         <ListItem
                             key={item.id.toString()}
                             title={item.customernumber}
-                            subtitle={item.date}
+                            subtitle={moment(item.date).format("DD/MM/YYYY, hh:mm:ss")}
                             onLongPress={() => {this._serve(item.id)}}
                         />
 

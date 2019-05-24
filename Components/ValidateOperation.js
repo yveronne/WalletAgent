@@ -64,10 +64,12 @@ const styles = EStyleSheet.create({
         flex: 1,
         backgroundColor: "#ededed",
         flexDirection: "column",
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingLeft: "$heightie",
+        paddingRight: "$heightie"
     },
     phone_container: {
-        flex: 2,
+        height: "$height/5",
         marginBottom: "$heightie",
         paddingTop: "$heightie",
         paddingBottom: "$heightie"

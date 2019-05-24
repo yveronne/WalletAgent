@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const URL = "http://192.168.99.37:8000/";
 
 export function logUser(username, password){
@@ -29,20 +31,6 @@ export function getWaitingList(storeID, token){
 export function markAsServed(itemID, token){
 
     const url = URL+"waitinglines/"+itemID;
-    var date = new Date();
-    var years = date.getFullYear();
-    var month = date.getMonth() +1;
-    var day = date.getDate();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var seconds = date.getSeconds();
-    if (month<10)   month = "0"+month;
-    if (day<10)   day = "0"+day;
-    if (hours<10)   hours = "0"+hours;
-    if (minutes<10)   minutes = "0"+minutes;
-    if (seconds<10)   seconds = "0"+seconds;
-
-    console.log(""+years+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds);
 
     return fetch(url, {
         method: "PATCH",
@@ -52,7 +40,7 @@ export function markAsServed(itemID, token){
         },
         body : JSON.stringify({
             "wasserved" : true,
-            "servicedate": ""+years+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds
+            "servicedate": moment(new Date()).format("YYYY-MM-DD hh:mm:ss")
         })
     })
         .then(response => {
